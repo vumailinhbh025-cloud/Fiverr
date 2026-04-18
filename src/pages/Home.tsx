@@ -2,6 +2,7 @@ import React from 'react'
 import Carousel from '../components/Home/Carousel'
 import Feel from '../components/Home/Feel'
 import Explore from '../components/Home/Explore'
+import { NavLink } from 'react-router-dom'
 
 type Props = {
   children?: React.ReactNode
@@ -44,7 +45,7 @@ const Home = (_props: Props) => {
                   </button>
                 </div>
               </form>
-
+              
               <div className="d-flex flex-wrap align-items-center gap-2 small text-white-75">
                 <span className="me-2 fs-5">Popular:</span>
                 <button type="button" className="btn btn-outline-light btn-sm rounded-pill py-2 px-3" style={{ fontSize: 15 }}>
@@ -84,6 +85,16 @@ const Home = (_props: Props) => {
             </div>
           </div>
         </div>
+      </section>
+      <section className="cta-section my-4">
+        <div className="d-flex justify-content-center">
+              <NavLink 
+                to='/danhSachCongViec' 
+                className="btn btn-outline-success px-5 py-4 rounded fs-2 fw-bold"
+              >
+                Start Now <i className="fa-solid fa-arrow-right ms-1"></i>
+              </NavLink>
+            </div>
       </section>
       <Carousel />
       <Feel/>

@@ -1,24 +1,24 @@
 import React from 'react'
-import { Outlet} from 'react-router-dom'
-import HeaderHome from '../components/HeaderHome'
+import HeaderJobList from '../components/HeaderJobList'
+import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 type Props = {
     children?: React.ReactNode
 }
 
-const HomeTemplates = (_props: Props) => {
+const JobTemplates = (_props: Props) => {
     return (
-        <div className='home-page w-100'>
-            <HeaderHome />
+        <div className='job-page w-100'>
+            <HeaderJobList />
             <div className="content">
                 <Outlet />
             </div>
             <div className='mt-5'>
-                <Footer/>
+                <Footer />
             </div>
         </div>
     )
 }
 
-export default HomeTemplates
+export default JobTemplates
