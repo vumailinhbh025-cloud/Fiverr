@@ -7,6 +7,7 @@ type Props = {
     children?: React.ReactNode
 }
 
+
 const HomeTemplates = (_props: Props) => {
     return (
         <div className='home-page w-100'>

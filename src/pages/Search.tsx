@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import type { Dispatch, RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllJobSearch } from '../redux/reduces/SearchFiver'
@@ -23,7 +23,7 @@ const Search = (_props: Props) => {
             <h2 className='m-4'>Kết quả tìm kiếm: <span className="text-success">"{k}"</span></h2>
             <div className="row g-4 justify-content-center">
                 {arrSearchFiver.map((jobSearch: SearchModel, index: number) => {
-                    return <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={index}>
+                    return <NavLink to={`/danhSachCongViec/detail/${jobSearch.id}`} className="job-card col-12 col-md-6 col-lg-4 col-xl-3 text-decoration-none" key={index}>
                         <div className="card h-100 shadow-sm bg-white border-0" style={{ border: '1px solid #e4e5e7', borderRadius: '8px', overflow: 'hidden' }}>
                             <div className="border-bottom text-center bg-white">
                                 <img
@@ -46,7 +46,7 @@ const Search = (_props: Props) => {
                                         <div className="text-muted" style={{ fontSize: '18px' }}>Level 2 Seller</div>
                                     </div>
                                 </div>
-                                <p style={{ fontSize: 18 }}>{jobSearch.congViec.moTaNgan}</p>
+                                <p className='job-title' style={{ fontSize: 18 }}>{jobSearch.congViec.moTaNgan}</p>
                                 <div className="d-flex align-items-center">
                                     {[...Array(5)].map((_, index) => {
                                         return (
@@ -69,7 +69,7 @@ const Search = (_props: Props) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </NavLink>
                 })}
             </div>
         </div>

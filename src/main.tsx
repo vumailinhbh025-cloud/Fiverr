@@ -11,9 +11,9 @@ import { store } from './redux/store'
 import { createBrowserHistory } from 'history'
 import Profile from './pages/Profile'
 import Search from './pages/Search'
+import Detail from './pages/Detail'
 export const history: any = createBrowserHistory()
-
-
+import './assets/css/index.css'
 createRoot(document.getElementById('root')!).render(
   <HistoryBrowser history={history}>
     <Provider store={store}>
@@ -22,16 +22,14 @@ createRoot(document.getElementById('root')!).render(
           <Route index element={<Home />}></Route>
           <Route path='login' element={<Login />}></Route>
           <Route path='register' element={<Register />}></Route>
-          <Route path='profile' element={<Profile/>}></Route>
-
-
-          
           <Route path='*' element={<Navigate to='/' />}></Route>
         </Route>
 
         <Route path='danhSachCongViec' element={<JobTemplates />}>
           <Route index element={<JobList />}></Route>
           <Route path='search' element={<Search/>}></Route>
+          <Route path='profile' element={<Profile/>}></Route>
+          <Route path='detail/:id' element={<Detail />}></Route>
         </Route>
 
 

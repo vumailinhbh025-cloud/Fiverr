@@ -26,11 +26,11 @@ export const { setArrayJob} = Job.actions
 
 export default Job.reducer
 
+
 export const getAllJobApiActionThunk=()=>{
     return async (dispatch: Dispatch)=>{
         try{
             const res = await httpClient.get<ResponseData<JobModel[]>>(`/api/cong-viec`)
-            console.log(res.data.content)
             dispatch(setArrayJob(res.data.content))
         }catch(err){
 

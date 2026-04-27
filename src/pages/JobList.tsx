@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { Dispatch, RootState } from '../redux/store'
 import { getAllJobApiActionThunk } from '../redux/reduces/Job'
 import type { JobModel } from '../ViewModel/JobModel'
+import AppBreadcrumb from '../components/CustomBreadcrumb'
+import { Pagination, ConfigProvider } from 'antd'
+import { NavLink } from 'react-router-dom'
 
 type Props = {
   children?: React.ReactNode
@@ -11,6 +14,15 @@ type Props = {
 const JobList = (_props: Props) => {
   const { arrJob } = useSelector((state: RootState) => state.Job)
   const dispatch: Dispatch = useDispatch()
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 12;
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentJobs = arrJob.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const getAllJobApi = async () => {
     dispatch(getAllJobApiActionThunk())
   }
@@ -18,10 +30,11 @@ const JobList = (_props: Props) => {
     getAllJobApi()
   }, [])
   return (
-    <div className="container py-5 bg-light">
+    <div className="container py-3 bg-light">
+      <AppBreadcrumb />
       <div className="row g-4 justify-content-center">
-        {arrJob.map((job: JobModel, index: number) => {
-          return <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={index}>
+        {currentJobs.map((job: JobModel, index: number) => {
+          return <NavLink to={`detail/${job.id}`} className="job-card col-12 col-md-6 col-lg-4 col-xl-3 text-decoration-none " key={index}>
             <div className="card h-100 shadow-sm bg-white border-0" style={{ border: '1px solid #e4e5e7', borderRadius: '8px', overflow: 'hidden' }}>
               <div className="border-bottom text-center bg-white">
                 <img
@@ -32,10 +45,9 @@ const JobList = (_props: Props) => {
                 />
               </div>
               <div className="card-body p-4">
-                <h3 className="card-text mb-3 fw-bold" style={{ fontSize: '18px', overflow: 'hidden', color: '#404145', }}>
+                <h3 className="job-title card-text mb-3 fw-bold " style={{ fontSize: '18px', overflow: 'hidden'}}>
                   {job.tenCongViec}
                 </h3>
-                <p style={{ fontSize: 18 }}>{job.moTaNgan}</p>
                 <div className="d-flex align-items-center">
                   {[...Array(5)].map((_, index) => {
                     return (
@@ -58,12 +70,33 @@ const JobList = (_props: Props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </NavLink>
         })}
 
       </div>
-    </div>
 
+      <div className="mt-3 d-flex justify-content-center">
+        <ConfigProvider
+          theme={{
+            components: {
+              Pagination: {
+                itemSize: 45,
+                fontSize: 20,        
+                borderRadius: 8,     
+              },
+            },
+          }}
+        >
+          <Pagination 
+          current={currentPage}
+          pageSize={pageSize}
+          total={arrJob.length}
+          onChange={handlePageChange}
+          showSizeChanger={false}
+        />
+        </ConfigProvider>
+      </div>
+    </div>
   )
 }
 

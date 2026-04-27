@@ -4,6 +4,8 @@ import type { Dispatch } from '../store';
 import { ACCESSTOKEN, getLocalStorage, httpClient, removeCookie, removeStore, saveCookie, saveLocalStorage, USERLOGIN } from '../../util/config';
 import { history } from '../../main';
 import type { LoginData, UserLoginResult } from '../../ViewModel/LoginFormValues';
+import type { ResponseData } from '../../ViewModel/ResponseData';
+import type { UserProfile } from '../../ViewModel/ProfileModel';
 
 
 let userLoginDefault= getLocalStorage<UserLoginResult>(USERLOGIN)
@@ -11,12 +13,14 @@ let accessTokenDefault = getLocalStorage<string>(ACCESSTOKEN)
 
 export interface UserState{
     userLogin: UserLoginResult | null, 
-    accessToken: string | null
+    accessToken: string | null,
+    userProfile: UserProfile | null
 }
 
 const initialState: UserState = {
     userLogin: userLoginDefault? userLoginDefault : null,
-    accessToken: accessTokenDefault ? accessTokenDefault : null
+    accessToken: accessTokenDefault ? accessTokenDefault : null,
+    userProfile:null
 }
 
 const UserReducer = createSlice({
@@ -26,10 +30,13 @@ const UserReducer = createSlice({
     loginAction:(state: UserState, action:PayloadAction<UserLoginResult>)=>{
         state.userLogin= action.payload,
         state.accessToken = action.payload.accessToken;
+    },
+    getProfileAction:(state:UserState,action:PayloadAction<UserProfile> )=>{
+        state.userProfile= action.payload
     }
 }});
 
-export const {loginAction} = UserReducer.actions
+export const {loginAction, getProfileAction} = UserReducer.actions
 
 export default UserReducer.reducer
 
@@ -40,14 +47,15 @@ export const loginActionApi=(userLogin:LoginData)=>{
             const res = await httpClient.post(`/api/auth/signin`, userLogin)
             const userResult = res.data.content;
             const payload: UserLoginResult= {
+                id: userResult.user?.id,
                 email: userResult.user?.email,
                 accessToken: userResult.token
             }
             const action= loginAction(payload)
             dispatch(action)
             alert("Đăng nhập thành công!");
-            history.push('/')
-            saveLocalStorage(USERLOGIN,payload.email)
+            history.push('/danhSachCongViec')
+            saveLocalStorage(USERLOGIN,payload)
             saveLocalStorage(ACCESSTOKEN, payload.accessToken)
             saveCookie(USERLOGIN, payload.email)
             saveCookie(ACCESSTOKEN, payload.accessToken)
@@ -74,4 +82,15 @@ export const registerActionApi=(userRegister:RegisterFormValues)=>{
         }
     }
 
+}
+
+export const getProfileApiActionThunk=(id:number)=>{
+    return async (dispatch: Dispatch)=>{
+        try{
+            const res= await httpClient.get<ResponseData<UserProfile>>(`/api/users/${id}`)
+            dispatch(getProfileAction(res.data.content))
+        }catch(err){
+
+        }
+    }
 }
