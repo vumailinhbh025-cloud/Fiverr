@@ -14,6 +14,7 @@ import Search from './pages/Search'
 import Detail from './pages/Detail'
 export const history: any = createBrowserHistory()
 import './assets/css/index.css'
+import ModalHOC from './HOC/ModalHOC'
 createRoot(document.getElementById('root')!).render(
   <HistoryBrowser history={history}>
     <Provider store={store}>
@@ -31,9 +32,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path='profile' element={<Profile/>}></Route>
           <Route path='detail/:id' element={<Detail />}></Route>
         </Route>
-
-
       </Routes>
+      <ModalHOC/>
     </Provider>
   </HistoryBrowser>
 )

@@ -97,4 +97,5 @@ httpClient.interceptors.response.use(response=>{
         alert(error.response.data.content)
         history.push('/login')
     }
+    return Promise.reject(error);
 })

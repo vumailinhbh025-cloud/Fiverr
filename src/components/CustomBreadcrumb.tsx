@@ -13,24 +13,27 @@ const AppBreadcrumb: React.FC = () => {
     'admin': 'Quản trị',
   };
 
-  const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+  const extraBreadcrumbItems = pathSnippets.map((snippet, index) => {
     const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
     const isLast = index === pathSnippets.length - 1;
-    const name = breadcrumbNameMap[pathSnippets[index]] || pathSnippets[index];
-
+    const name = breadcrumbNameMap[snippet] || snippet;
+    const isNotClickable = isLast || snippet === 'detail';
     return {
       key: url,
-      title: isLast ? name : <Link to={url}>{name}</Link>,
+      title: isNotClickable ? (
+        <span style={{ color: '#666' }}>{name}</span>
+      ) : (
+        <Link to={url}>{name}</Link>
+      ),
     };
   });
 
-  // 4. Luôn thêm icon Trang chủ ở đầu
   const breadcrumbItems = [
     {
       key: 'home',
       title: (
         <Link to="/">
-          <HomeOutlined style={{ fontSize: '22px', color: '#000' }}/>
+          <HomeOutlined style={{ fontSize: '22px', color: '#000' }} />
         </Link>
       ),
     },
@@ -38,17 +41,17 @@ const AppBreadcrumb: React.FC = () => {
   ];
 
   return (
-    <div style={{ 
-    padding: '12px', 
-    marginBottom: '25px',
-    background: '#fff'
-  }}>
-    <Breadcrumb 
-      separator="/"
-      items={breadcrumbItems} 
-      style={{ fontSize: '20px' }}
-    />
-  </div>
+    <div style={{
+      padding: '12px',
+      marginBottom: '25px',
+      background: '#fff'
+    }}>
+      <Breadcrumb
+        separator="/"
+        items={breadcrumbItems}
+        style={{ fontSize: '20px' }}
+      />
+    </div>
   );
 };
 

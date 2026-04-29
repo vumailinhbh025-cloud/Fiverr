@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { Dispatch, RootState } from '../redux/store'
 import { getAllJobApiActionThunk } from '../redux/reduces/Job'
 import type { JobModel } from '../ViewModel/JobModel'
-import AppBreadcrumb from '../components/CustomBreadcrumb'
 import { Pagination, ConfigProvider } from 'antd'
 import { NavLink } from 'react-router-dom'
 
@@ -30,8 +29,7 @@ const JobList = (_props: Props) => {
     getAllJobApi()
   }, [])
   return (
-    <div className="container py-3 bg-light">
-      <AppBreadcrumb />
+    <div className="container pb-3 bg-light">
       <div className="row g-4 justify-content-center">
         {currentJobs.map((job: JobModel, index: number) => {
           return <NavLink to={`detail/${job.id}`} className="job-card col-12 col-md-6 col-lg-4 col-xl-3 text-decoration-none " key={index}>

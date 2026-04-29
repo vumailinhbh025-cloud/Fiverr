@@ -75,7 +75,7 @@ const HeaderJobList = (_props: Props) => {
     <header className="border-bottom bg-white shadow-sm">
       <div className="container py-4">
         <div className="d-flex align-items-center justify-content-between gap-3 flex-wrap">
-          <NavLink className="navbar-brand fw-bold fs-2 text-dark" to="/">
+          <NavLink className="navbar-brand fw-bold fs-2 text-dark" to="/danhSachCongViec">
             fiverr
             <span className="text-success" style={{ fontSize: 8 }}>
               <i className="fa fa-at" />

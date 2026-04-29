@@ -4,6 +4,7 @@ import Job from "./reduces/Job";
 import SearchFiver from './reduces/SearchFiver'
 import MenuJobReducer from './reduces/MenuJobReducer'
 import DetailReducer from './reduces/DetailReducer'
+import ModalHOCReducer from './reduces/ModalHOCReducer'
 export const store= configureStore({
     reducer:{
         UserReducer, 
@@ -11,6 +12,7 @@ export const store= configureStore({
         SearchFiver, 
         MenuJobReducer, 
         DetailReducer,
+        ModalHOCReducer
     }
 })
 

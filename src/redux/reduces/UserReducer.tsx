@@ -6,6 +6,7 @@ import { history } from '../../main';
 import type { LoginData, UserLoginResult } from '../../ViewModel/LoginFormValues';
 import type { ResponseData } from '../../ViewModel/ResponseData';
 import type { UserProfile } from '../../ViewModel/ProfileModel';
+import type { UpdateThongTinValues } from '../../ViewModel/UpdateThongTinValues';
 
 
 let userLoginDefault= getLocalStorage<UserLoginResult>(USERLOGIN)
@@ -14,13 +15,15 @@ let accessTokenDefault = getLocalStorage<string>(ACCESSTOKEN)
 export interface UserState{
     userLogin: UserLoginResult | null, 
     accessToken: string | null,
-    userProfile: UserProfile | null
+    userProfile: UserProfile | null,
+    updateProfile: UpdateThongTinValues | null 
 }
 
 const initialState: UserState = {
     userLogin: userLoginDefault? userLoginDefault : null,
     accessToken: accessTokenDefault ? accessTokenDefault : null,
-    userProfile:null
+    userProfile:null, 
+    updateProfile: null
 }
 
 const UserReducer = createSlice({
@@ -33,10 +36,13 @@ const UserReducer = createSlice({
     },
     getProfileAction:(state:UserState,action:PayloadAction<UserProfile> )=>{
         state.userProfile= action.payload
+    }, 
+    setUpdateProfile:(state:UserState, action:PayloadAction<UpdateThongTinValues>)=>{
+        state.updateProfile=action.payload
     }
 }});
 
-export const {loginAction, getProfileAction} = UserReducer.actions
+export const {loginAction, getProfileAction, setUpdateProfile} = UserReducer.actions
 
 export default UserReducer.reducer
 
@@ -91,6 +97,19 @@ export const getProfileApiActionThunk=(id:number)=>{
             dispatch(getProfileAction(res.data.content))
         }catch(err){
 
+        }
+    }
+}
+
+export const putUpdateProfileActionThunk=(payload: UpdateThongTinValues)=>{
+    return async (dispatch:Dispatch)=>{
+        try{
+            const res= await httpClient.put<ResponseData<UpdateThongTinValues>>(`/api/users/${payload.id}`,payload);
+            dispatch(setUpdateProfile(res.data.content));
+            alert("Cập nhật thành công!");
+            dispatch(getProfileApiActionThunk(payload.id));
+        }catch(err){
+            alert("Cập nhật thất bại!");
         }
     }
 }

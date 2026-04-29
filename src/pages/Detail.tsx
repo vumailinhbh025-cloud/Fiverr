@@ -45,7 +45,8 @@ const Detail = (_props: Props) => {
     return <div className="container py-5 text-center">Đang tải dữ liệu...</div>;
   }
   return (
-    <div className="container py-5">
+    
+    <div className="container pb-5">
       <div className="row g-4">
         <div className="col-12">
           <div className="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3">
@@ -269,7 +270,7 @@ const Detail = (_props: Props) => {
                         <div key={cmt.id || index} className={`pb-4 ${index !== Math.min(commentsToShow, binhLuanJob.length) - 1 ? 'border-bottom' : ''}`}>
                           <div className="d-flex align-items-start gap-3 my-3">
                             <img
-                              src={cmt.avatar || `https://i.pravatar.cc/100?u=${cmt.id}`}
+                              src={cmt.avatar || `https://i.pravatar.cc/100?u=${cmt.avatar}`}
                               alt="Reviewer avatar"
                               className="rounded-circle border border-2 border-light"
                               width="56"
