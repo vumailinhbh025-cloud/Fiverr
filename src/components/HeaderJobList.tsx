@@ -104,6 +104,7 @@ const HeaderJobList = (_props: Props) => {
           </form>
 
           <div className={`d-flex align-items-center gap-2 flex-wrap ${userLogin ? 'justify-content-end' : 'justify-content-center'}`}>
+            <NavLink to="/admin" className="btn btn-outline-secondary rounded-pill px-3 me-2 d-none d-md-inline-block">Admin</NavLink>
             {userLogin && (
               <>
                 <button type="button" className="btn btn-link text-decoration-none text-muted">

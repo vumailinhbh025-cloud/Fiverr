@@ -26,6 +26,7 @@ const HeaderHome = () => {
           <div className="text-white text-decoration-none fw-semibold d-none d-md-block m-0 fs-5" style={{ fontSize: '16px' }}>
             Become a Seller
           </div>
+          <NavLink to="/admin" className="btn btn-outline-light rounded-pill px-3 text-white">Admin</NavLink>
           {renderLogin()}
         </div>
       </div>

@@ -12,6 +12,11 @@ import { createBrowserHistory } from 'history'
 import Profile from './pages/Profile'
 import Search from './pages/Search'
 import Detail from './pages/Detail'
+import AdminLayout from './pages/Admin/AdminLayout'
+import Dashboard from './pages/Admin/Dashboard'
+import Users from './pages/Admin/Users'
+import AdminLogin from './pages/Admin/AdminLogin'
+import Jobs from './pages/Admin/Jobs'
 export const history: any = createBrowserHistory()
 import './assets/css/index.css'
 import ModalHOC from './HOC/ModalHOC'
@@ -31,6 +36,14 @@ createRoot(document.getElementById('root')!).render(
           <Route path='search' element={<Search/>}></Route>
           <Route path='profile' element={<Profile/>}></Route>
           <Route path='detail/:id' element={<Detail />}></Route>
+        </Route>
+
+        <Route path='admin/login' element={<AdminLogin />} />
+
+        <Route path='admin' element={<AdminLayout />}>
+          <Route index element={<Dashboard/>} />
+          <Route path='users' element={<Users/>} />
+          <Route path='jobs' element={<Jobs/>} />
         </Route>
       </Routes>
       <ModalHOC/>
